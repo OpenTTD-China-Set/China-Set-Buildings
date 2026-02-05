@@ -1,0 +1,8 @@
+##grflangid 0x01
+STR_GRF_NAME                    :China Set: Buildings {WHITE}0.1.0-INDEV
+STR_GRF_DESC                    :{}{PUSH_COLOUR}{GOLD}China{RED} Set{POP_COLOUR}: Buildings {PUSH_COLOUR}{WHITE}0.1.0-INDEV{POP_COLOUR}{}{}Insert your description here.{}{}Distributed under {PUSH_COLOUR}{SILVER}GPL v2{POP_COLOUR}.
+
+STR_PARAM_VANILLA               :Vanilla buildings
+STR_PARAM_VANILLA_DESC          :Whether to disable vanilla buildings
+STR_PARAM_VANILLA_DISABLED      :Disabled
+STR_PARAM_VANILLA_ENABLED       :Enabled

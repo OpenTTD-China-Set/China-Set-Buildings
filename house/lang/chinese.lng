@@ -1,0 +1,8 @@
+##grflangid 0x56
+STR_GRF_NAME                    :中国包：建筑 {WHITE}0.1.0
+STR_GRF_DESC                    :{}{PUSH_COLOUR}{GOLD}中国{RED}包{POP_COLOUR}：建筑 - {PUSH_COLOUR}{WHITE}0.1.0-INDEV{POP_COLOUR}{}{}本 NewGRF 是 Blablabla。{}{}在 {PUSH_COLOUR}{SILVER}GPL v2{POP_COLOUR} 下分发。
+
+STR_PARAM_VANILLA               :原版建筑
+STR_PARAM_VANILLA_DESC          :是否保留原版建筑
+STR_PARAM_VANILLA_DISABLED      :不保留
+STR_PARAM_VANILLA_ENABLED       :保留
