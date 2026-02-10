@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 import grf
 import argparse
-from house.lib.docgen import gen_docs
+from pathlib import Path
+from house.lib.docgen import gen_docs, build_docs
 from house.lib.parameters import parameter_list
 from house.houses.test.houses import houses
 
@@ -63,7 +64,13 @@ def gen(args):
 
 
 def docs(args):
+    # Generate content (markdown files, po files, images)
     gen_docs(get_string_manager(), houses)
+
+    # Build HTML documentation for all languages
+    docs_dir = Path(__file__).parent.parent / "docs"
+    if not build_docs(docs_dir):
+        raise RuntimeError("Documentation build failed")
 
 
 def main():
