@@ -7,3 +7,8 @@ gopath
 render
 *.code-workspace
 .directory
+.gopath/
+docs/_build/
+docs/img/
+docs/buildings.md
+docs/building_*.md

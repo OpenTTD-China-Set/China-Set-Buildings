@@ -6,3 +6,6 @@ STR_PARAM_VANILLA               :Vanilla buildings
 STR_PARAM_VANILLA_DESC          :Whether to disable vanilla buildings
 STR_PARAM_VANILLA_DISABLED      :Disabled
 STR_PARAM_VANILLA_ENABLED       :Enabled
+
+STR_HOUSE_RURAL                 :Rural Building
+STR_HOUSE_TOWN                  :Town Building
