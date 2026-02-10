@@ -37,20 +37,15 @@ This NewGRF is available from the in-game Online Content.
 
 ## 3 Credits
 
-Management:
-- Ahyangyi
-
 Graphics:
-- Ahyangyi
+- NACHN
 
 Code:
 - Ahyangyi
 
-grf-py:
-- dP
-
-GoRender Tool:
-- Timberwolf (Matt Kimber)
+Special Thanks:
+- dP (grf-py)
+- Timberwolf (Matt Kimber) (GoRender Tool)
 
 ## 4 Contact information
 ### 4.1 Bug reports
@@ -80,7 +75,7 @@ contact Ahyangyi via Private Message at www.tt-forums.net.
 
 China Set: Buildings
 
-Copyright (C) 2024-2025 China Set Team
+Copyright (C) 2026 China Set Team
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by

@@ -1,4 +1,5 @@
 import os
+import shutil
 
 
 def gen_docs(string_manager, houses):
@@ -14,17 +15,21 @@ def gen_docs(string_manager, houses):
         except KeyError:
             house_name = house.name
 
-        # Try to get the first sprite for the building preview
+        # Copy the first sprite image from cache if available
+        img_dest = os.path.join(prefix, "img", "buildings", f"{house_id}.png")
+        has_image = False
         if house.sprites:
             try:
-                img = house.sprites[0].get_pil_image()
-                img_path = f"img/buildings/{house_id}.png"
-                img.save(os.path.join(prefix, img_path))
-                has_image = True
+                # Get the voxel name from the LazyAlternativeSprites
+                voxel_name = house.sprites[0].voxel.name
+                cache_prefix = house.sprites[0].voxel.prefix
+                # Use the 1x 32bpp rendered image (first angle)
+                src_img = os.path.join(cache_prefix, f"{voxel_name}_1x_32bpp.png")
+                if os.path.exists(src_img):
+                    shutil.copy(src_img, img_dest)
+                    has_image = True
             except Exception:
-                has_image = False
-        else:
-            has_image = False
+                pass
 
         # Generate individual building page
         with open(os.path.join(prefix, f"building_{house_id}.md"), "w") as f:
