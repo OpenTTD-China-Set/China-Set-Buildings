@@ -14,7 +14,11 @@ def gen_docs(string_manager, houses, docs_dir=None):
 
     prefix = docs_dir
     os.makedirs(prefix / "img" / "buildings", exist_ok=True)
-    os.makedirs(prefix / "locale" / "zh_CN" / "LC_MESSAGES", exist_ok=True)
+
+    # Create locale directories for all non-English languages
+    for lang in LANGUAGES:
+        if lang["code"] != "en":
+            os.makedirs(prefix / "locale" / lang["code"] / "LC_MESSAGES", exist_ok=True)
 
     # Generate individual building pages
     for house in houses:
@@ -49,16 +53,24 @@ def gen_docs(string_manager, houses, docs_dir=None):
             print(f"**ID:** {house_id}\n", file=f)
             print(f"**Name:** {house_name}\n", file=f)
 
-        # Generate Chinese translation for this building
-        with open(
-            prefix / "locale" / "zh_CN" / "LC_MESSAGES" / f"building_{house_id}.po", "w"
-        ) as f:
-            print(
-                f"""# Chinese translations for building {house_id}
+        # Generate translation files for all non-English languages
+        for lang in LANGUAGES:
+            if lang["code"] == "en":
+                continue
+            with open(
+                prefix
+                / "locale"
+                / lang["code"]
+                / "LC_MESSAGES"
+                / f"building_{house_id}.po",
+                "w",
+            ) as f:
+                print(
+                    f"""# Translations for building {house_id} ({lang['name']})
 msgid ""
 msgstr ""
 "Project-Id-Version: China Set Buildings 0.1.0\\n"
-"Language: zh_CN\\n"
+"Language: {lang['code']}\\n"
 "MIME-Version: 1.0\\n"
 "Content-Type: text/plain; charset=UTF-8\\n"
 "Content-Transfer-Encoding: 8bit\\n"
@@ -67,13 +79,13 @@ msgid "{house_name}"
 msgstr "{house_name}"
 
 msgid "**ID:** {house_id}"
-msgstr "**ID：** {house_id}"
+msgstr "**ID:** {house_id}"
 
 msgid "**Name:** {house_name}"
-msgstr "**名称：** {house_name}"
+msgstr "**Name:** {house_name}"
 """,
-                file=f,
-            )
+                    file=f,
+                )
 
     # Generate buildings index page with links to individual pages
     with open(prefix / "buildings.md", "w") as f:

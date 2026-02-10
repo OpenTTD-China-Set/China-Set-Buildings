@@ -1,0 +1,19 @@
+<div class="sidebar-tree">
+  <p class="caption" role="heading"><span class="caption-text">Language</span></p>
+  <ul>
+    <li class="toctree-l1">
+      {% if language == "en" %}
+      <a class="reference internal" href="./">English</a>
+      {% else %}
+      <a class="reference internal" href="../">English</a>
+      {% endif %}
+    </li>
+    <li class="toctree-l1">
+      {% if language == "zh_CN" or language == "zh-CN" %}
+      <a class="reference internal" href="./">简体中文</a>
+      {% else %}
+      <a class="reference internal" href="zh_CN/">简体中文</a>
+      {% endif %}
+    </li>
+  </ul>
+</div>

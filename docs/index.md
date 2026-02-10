@@ -10,4 +10,4 @@ buildings
 
 ---
 
-**Languages / 语言:** [English](/en/) | [简体中文](/zh_CN/)
+**Language:** <a href="./">English</a> | <a href="zh_CN/">简体中文</a>

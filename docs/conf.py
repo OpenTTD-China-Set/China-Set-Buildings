@@ -21,6 +21,19 @@ locale_dirs = ["locale/"]
 gettext_compact = False
 
 templates_path = ["_templates"]
+
+# Add language selector to sidebar
+html_sidebars = {
+    "**": [
+        "sidebar/scroll-start.html",
+        "sidebar/brand.html",
+        "sidebar/search.html",
+        "sidebar/navigation.html",
+        "sidebar/language-selector.html",
+        "sidebar/ethical-ads.html",
+        "sidebar/scroll-end.html",
+    ]
+}
 exclude_patterns = ["_build", "Thumbs.db", ".DS_Store"]
 source_suffix = [".rst", ".md"]
 
