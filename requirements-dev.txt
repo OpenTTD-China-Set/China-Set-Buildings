@@ -3,3 +3,4 @@ pytest
 furo
 sphinx
 myst_parser
+sphinx-intl

@@ -16,6 +16,10 @@ release = "0.1.0-INDEV"
 
 extensions = ["myst_parser"]
 
+# Internationalization
+locale_dirs = ['locale/']
+gettext_compact = False
+
 templates_path = ["_templates"]
 exclude_patterns = ["_build", "Thumbs.db", ".DS_Store"]
 source_suffix = [".rst", ".md"]

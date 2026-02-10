@@ -38,7 +38,17 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@main
       - name: Generate docs (Building)
-        run: make doc.building
+        run: python3 -m house.gen doc
+      - name: Build English docs
+        run: cd docs && make html
+      - name: Build Chinese docs
+        run: cd docs && make -e SPHINXOPTS="-D language=zh_CN" html BUILDDIR=_build/zh_CN
+      - name: Combine language builds
+        run: |
+          mkdir -p docs/_build/html
+          cp -r docs/_build/html/* docs/_build/html/ 2>/dev/null || true
+          mkdir -p docs/_build/html/zh_CN
+          cp -r docs/_build/zh_CN/html/* docs/_build/html/zh_CN/
       - name: Upload artifact
         uses: actions/upload-pages-artifact@main
         with:
