@@ -10,7 +10,7 @@ clean_building:
 clean:
 	rm -f *.grf
 
-doc:
+doc.building:
 	python3 -m house.gen doc
 	cd docs && make html
 	cd docs && mv index.md index_en.md && mv index_zh.md index.md && \
