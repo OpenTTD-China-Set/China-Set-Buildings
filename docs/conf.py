@@ -7,7 +7,7 @@
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
 project = "China Set: Buildings"
-copyright = "2024-2025, China Set Team"
+copyright = "2026, China Set Team"
 author = "China Set Team"
 release = "0.1.0-INDEV"
 
