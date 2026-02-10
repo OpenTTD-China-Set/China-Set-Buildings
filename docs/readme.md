@@ -23,8 +23,7 @@ This NewGRF provides additional buildings for OpenTTD, focusing on Chinese archi
 
 ### 2.1 Requirements
 
-- For a complete experience, use OpenTTD 14.0 or higher
-- A "essentials" subset of functionality is supported and tested for OpenTTD 12.0, and might work for even older versions.
+- Minimum tested OpenTTD version: 12.0
 - Not compatible with TTDPatch
 
 
@@ -51,7 +50,7 @@ Special Thanks:
 ### 4.1 Bug reports
 
 Please report any bugs you find at
-  bug tracker: https://github.com/ahyangyi/openttd-newgrfs/issues
+  bug tracker: https://github.com/OpenTTD-China-Set/China-Set-Buildings/issues
 
 Always included a detailed description of the bug, preferrably with
 screenshot and savegame. Also state the exact game version you're using,
@@ -67,7 +66,7 @@ don't report it here but in the forum topic of the patch(pack) instead.
 
 ### 4.2 General enquiries
 
-If you have any queries that cannot be asked in the forum topic, then
+If you have any queries that cannot be asked in Github publicly, then
 contact Ahyangyi via Private Message at www.tt-forums.net.
 
 
