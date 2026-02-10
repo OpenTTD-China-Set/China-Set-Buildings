@@ -2,6 +2,13 @@ from house.lib import AHouse
 from agrf.graphics.voxel import LazyVoxel, LazySpriteSheet
 
 
+house_names = [
+    "STR_HOUSE_RURAL",
+    "STR_HOUSE_RURAL",
+    "STR_HOUSE_RURAL",
+    "STR_HOUSE_TOWN",
+]
+
 houses = []
 for i, x in enumerate(
     ["rural_north01", "rural_north02", "rural_north03", "town_north01"]
@@ -18,7 +25,7 @@ for i, x in enumerate(
         AHouse(
             substitute=0x06,
             id=0x80 + i,
-            name="Building",
+            name=house_names[i],
             sprites=[s for v in rotated_voxels for s in v.spritesheet()],
             flags=0x1,
             availability_mask=0xF81F,

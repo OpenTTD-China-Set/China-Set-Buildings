@@ -6,3 +6,6 @@ STR_PARAM_VANILLA               :原版建筑
 STR_PARAM_VANILLA_DESC          :是否保留原版建筑
 STR_PARAM_VANILLA_DISABLED      :不保留
 STR_PARAM_VANILLA_ENABLED       :保留
+
+STR_HOUSE_RURAL                 :乡村建筑
+STR_HOUSE_TOWN                  :城镇建筑

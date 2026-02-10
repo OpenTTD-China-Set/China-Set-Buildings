@@ -1,9 +1,12 @@
 __pycache__
 *.grf
 *.pyc
-gopath
 /*.vox
 .cache
 render
 *.code-workspace
 .directory
+docs/_build/
+docs/img/
+docs/buildings.md
+docs/building_*.md
