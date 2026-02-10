@@ -37,7 +37,7 @@ jobs:
         run: pip install -r requirements-dev.txt
       - name: Setup Pages
         uses: actions/configure-pages@main
-      - name: Generate docs (Building)
+      - name: Build documentation
         run: make doc.building
       - name: Upload artifact
         uses: actions/upload-pages-artifact@main

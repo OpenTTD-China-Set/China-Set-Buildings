@@ -10,3 +10,5 @@ docs/_build/
 docs/img/
 docs/buildings.md
 docs/building_*.md
+docs/locale/zh_CN/LC_MESSAGES/building_*.po
+docs/locale/zh_CN/LC_MESSAGES/*.mo

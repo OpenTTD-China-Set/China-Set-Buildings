@@ -12,7 +12,6 @@ clean:
 
 doc.building:
 	python3 -m house.gen doc
-	cd docs; make html
 
 building.grf:
 	python3 -m house.gen gen

@@ -17,7 +17,7 @@
 
 ## 1 About
 
-This NewGRF provides additional buildings for OpenTTD, focusing on Chinese architectural styles.
+This NewGRF provides additional buildings for OpenTTD, focusing on modern and contemporary Chinese buildings.
 
 ## 2 General information
 
