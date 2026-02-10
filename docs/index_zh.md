@@ -4,10 +4,10 @@
 ```{toctree}
 :maxdepth: 2
 :hidden:
-changelog
+changelog_zh
 buildings
 ```
 
 ---
 
-**语言 / Languages：** [English](/) | [简体中文](/zh_CN/)
+**语言 / Languages：** [English](/en/) | [简体中文](/zh_CN/)
