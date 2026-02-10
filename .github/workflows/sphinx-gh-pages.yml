@@ -38,7 +38,7 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@main
       - name: Build documentation
-        run: make doc.all
+        run: make doc
       - name: Upload artifact
         uses: actions/upload-pages-artifact@main
         with:
