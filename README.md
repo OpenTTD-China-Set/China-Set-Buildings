@@ -1,8 +1,7 @@
 China Set: Buildings
 ====================
 
-![Unit tests](https://github.com/OpenTTD-China-Set/china-set-buildingss-wuhu/actions/workflows/unit-tests.yml/badge.svg)
-![Docs](https://github.com/OpenTTD-China-Set/china-set-buildingss-wuhu/actions/workflows/sphinx-gh-pages.yml/badge.svg)
+![Docs](https://github.com/OpenTTD-China-Set/China-Set-Buildings/actions/workflows/sphinx-gh-pages.yml/badge.svg)
 
 <!-- start elevator-pitch -->
 This repo contains the source code for China Set: Buildings.
