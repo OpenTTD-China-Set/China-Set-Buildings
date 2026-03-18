@@ -12,3 +12,4 @@ docs/buildings.md
 docs/building_*.md
 docs/locale/
 *.mo
+*.rst

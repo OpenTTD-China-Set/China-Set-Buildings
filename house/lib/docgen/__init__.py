@@ -1,6 +1,9 @@
 import os
-import shutil
 from pathlib import Path
+
+from PIL import Image
+import grf
+from agrf.graphics import LayeredImage
 
 from .builder import build_docs, LANGUAGES
 
@@ -29,27 +32,28 @@ def gen_docs(string_manager, houses, docs_dir=None):
         except KeyError:
             house_name = house.name
 
-        # Copy the first sprite image from cache if available
-        img_dest = prefix / "img" / "buildings" / f"{house_id}.png"
         has_image = False
-        if house.sprites:
-            try:
-                # Get the voxel name from the LazyAlternativeSprites
-                voxel_name = house.sprites[0].voxel.name
-                cache_prefix = house.sprites[0].voxel.prefix
-                # Use the 1x 32bpp rendered image (first angle)
-                src_img = Path(cache_prefix) / f"{voxel_name}_1x_32bpp.png"
-                if src_img.exists():
-                    shutil.copy(src_img, img_dest)
-                    has_image = True
-            except Exception:
-                pass
+        for i, sprite in enumerate(house.sprites):
+            img_dest = prefix / "img" / "buildings" / f"{house_id}_{i}.png"
+            sprite.voxel.render()
 
-        # Generate individual building page
-        with open(prefix / f"building_{house_id}.md", "w") as f:
-            print(f"# {house_name}\n", file=f)
+            best_fit = sprite.get_sprite(zoom=grf.ZOOM_4X, bpp=32)
+            img = LayeredImage.from_sprite(best_fit).crop().to_pil_image()
+            img.save(img_dest)
+            has_image = True
+
+        with open(prefix / f"building_{house_id}.rst", "w") as f:
+            print(f"{house_name}\n================\n", file=f)
             if has_image:
-                print(f"![Building preview](img/buildings/{house_id}.png)\n", file=f)
+                for i in range(len(house.sprites)):
+                    print(
+                        f".. figure:: img/buildings/{house_id}_{i}.png\n"
+                        f"   :width: 128\n"
+                        f"   :figclass: inline-figure\n",
+                        end="\n",
+                        file=f,
+                    )
+                print("", file=f)
             print(f"**ID:** {house_id}\n", file=f)
             print(f"**Name:** {house_name}\n", file=f)
 
@@ -94,7 +98,7 @@ msgstr "**Name:** {house_name}"
         print("```{toctree}\n:maxdepth: 1\n:hidden:\n", file=f)
         for house in houses:
             house_id = f"{house.id:04X}"
-            print(f"building_{house_id}", file=f)
+            print(f"building_{house_id}.rst", file=f)
         print("```\n", file=f)
 
         for house in houses:
@@ -103,7 +107,7 @@ msgstr "**Name:** {house_name}"
                 house_name = string_manager[house.name]
             except KeyError:
                 house_name = house.name
-            print(f"- [{house_name} (ID: {house_id})](building_{house_id}.md)", file=f)
+            print(f"- [{house_name} (ID: {house_id})](building_{house_id}.rst)", file=f)
 
 
 __all__ = ["gen_docs", "build_docs", "LANGUAGES"]
