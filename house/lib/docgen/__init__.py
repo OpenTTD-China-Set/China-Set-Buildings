@@ -7,6 +7,47 @@ from agrf.graphics import LayeredImage
 
 from .builder import build_docs, LANGUAGES
 
+# Map language codes to OpenTTD language IDs
+LANG_ID_MAP = {"en": 0x7F, "zh_CN": 0x56}  # English (US)  # Chinese (Simplified)
+
+# Map language codes to file suffixes
+LANG_SUFFIX_MAP = {"en": "", "zh_CN": "_zh"}
+
+# Language-specific UI strings
+LANG_UI = {
+    "en": {
+        "buildings_title": "Buildings",
+        "buildings_intro": "This page lists all the buildings included in this NewGRF.",
+        "id_label": "ID",
+        "name_label": "Name",
+    },
+    "zh_CN": {
+        "buildings_title": "建筑",
+        "buildings_intro": "此页面列出了此 NewGRF 中的所有建筑。",
+        "id_label": "编号",
+        "name_label": "名称",
+    },
+}
+
+
+def _get_house_name(string_manager, house, lang_id):
+    """Return the translated house name for the given language ID."""
+    house_name = house.name
+    try:
+        string_ref = string_manager[house.name]
+        translations = {
+            lid: (
+                text.decode("utf-8").replace("Þ", "")
+                if isinstance(text, bytes)
+                else text
+            )
+            for lid, text in string_ref.get_pairs()
+        }
+        house_name = translations.get(lang_id, translations.get(0x7F, house.name))
+    except (KeyError, AttributeError):
+        pass
+    return house_name
+
 
 def gen_docs(string_manager, houses, docs_dir=None):
     """Generate documentation content for buildings."""
@@ -16,98 +57,66 @@ def gen_docs(string_manager, houses, docs_dir=None):
         docs_dir = Path(docs_dir)
 
     prefix = docs_dir
-    os.makedirs(prefix / "img" / "buildings", exist_ok=True)
+    img_prefix = prefix / "img" / "buildings"
+    os.makedirs(img_prefix, exist_ok=True)
 
-    # Create locale directories for all non-English languages
-    for lang in LANGUAGES:
-        if lang["code"] != "en":
-            os.makedirs(prefix / "locale" / lang["code"] / "LC_MESSAGES", exist_ok=True)
+    # Build language list including English
+    all_langs = [{"code": "en", "name": "English"}] + LANGUAGES
 
-    # Generate individual building pages
+    # Generate images once (shared across all languages)
     for house in houses:
         house_id = f"{house.id:04X}"
-        # Try to get translated name from string manager, fallback to raw name
-        try:
-            house_name = string_manager[house.name]
-        except KeyError:
-            house_name = house.name
-
-        has_image = False
         for i, sprite in enumerate(house.sprites):
-            img_dest = prefix / "img" / "buildings" / f"{house_id}_{i}.png"
+            img_dest = img_prefix / f"{house_id}_{i}.png"
             sprite.voxel.render()
 
             best_fit = sprite.get_sprite(zoom=grf.ZOOM_4X, bpp=32)
             img = LayeredImage.from_sprite(best_fit).crop().to_pil_image()
             img.save(img_dest)
-            has_image = True
 
-        with open(prefix / f"building_{house_id}.rst", "w") as f:
-            print(f"{house_name}\n================\n", file=f)
-            if has_image:
+    # Generate building RST files and buildings index for each language
+    for lang in all_langs:
+        lang_code = lang["code"]
+        suffix = LANG_SUFFIX_MAP[lang_code]
+        lang_id = LANG_ID_MAP.get(lang_code, 0x7F)
+        ui = LANG_UI[lang_code]
+
+        # Building detail pages
+        for house in houses:
+            house_id = f"{house.id:04X}"
+            house_name = _get_house_name(string_manager, house, lang_id)
+
+            with open(prefix / f"building_{house_id}{suffix}.rst", "w") as f:
+                print(f"{house_name}\n================\n", file=f)
                 for i in range(len(house.sprites)):
                     print(
-                        f".. figure:: img/buildings/{house_id}_{i}.png\n"
+                        f".. figure:: /img/buildings/{house_id}_{i}.png\n"
                         f"   :width: 128\n"
                         f"   :figclass: inline-figure\n",
                         end="\n",
                         file=f,
                     )
                 print("", file=f)
-            print(f"**ID:** {house_id}\n", file=f)
-            print(f"**Name:** {house_name}\n", file=f)
+                print(f"**{ui['id_label']}:** {house_id}\n", file=f)
+                print(f"**{ui['name_label']}:** {house_name}\n", file=f)
 
-        # Generate translation files for all non-English languages
-        for lang in LANGUAGES:
-            if lang["code"] == "en":
-                continue
-            with open(
-                prefix
-                / "locale"
-                / lang["code"]
-                / "LC_MESSAGES"
-                / f"building_{house_id}.po",
-                "w",
-            ) as f:
+        # Buildings index page
+        with open(prefix / f"buildings{suffix}.md", "w") as f:
+            print(f"# {ui['buildings_title']}\n", file=f)
+            print(f"{ui['buildings_intro']}\n", file=f)
+            print("```{toctree}\n:maxdepth: 1\n:hidden:\n", file=f)
+            for house in houses:
+                house_id = f"{house.id:04X}"
+                print(f"building_{house_id}", file=f)
+            print("```\n", file=f)
+
+            for house in houses:
+                house_id = f"{house.id:04X}"
+                house_name = _get_house_name(string_manager, house, lang_id)
                 print(
-                    f"""# Translations for building {house_id} ({lang['name']})
-msgid ""
-msgstr ""
-"Project-Id-Version: China Set Buildings 0.1.0\\n"
-"Language: {lang['code']}\\n"
-"MIME-Version: 1.0\\n"
-"Content-Type: text/plain; charset=UTF-8\\n"
-"Content-Transfer-Encoding: 8bit\\n"
-
-msgid "{house_name}"
-msgstr "{house_name}"
-
-msgid "**ID:** {house_id}"
-msgstr "**ID:** {house_id}"
-
-msgid "**Name:** {house_name}"
-msgstr "**Name:** {house_name}"
-""",
+                    f"- [{house_name} (ID: {house_id})](building_{house_id}.rst)",
                     file=f,
                 )
-
-    # Generate buildings index page with links to individual pages
-    with open(prefix / "buildings.md", "w") as f:
-        print("# Buildings\n", file=f)
-        print("This page lists all the buildings included in this NewGRF.\n", file=f)
-        print("```{toctree}\n:maxdepth: 1\n:hidden:\n", file=f)
-        for house in houses:
-            house_id = f"{house.id:04X}"
-            print(f"building_{house_id}.rst", file=f)
-        print("```\n", file=f)
-
-        for house in houses:
-            house_id = f"{house.id:04X}"
-            try:
-                house_name = string_manager[house.name]
-            except KeyError:
-                house_name = house.name
-            print(f"- [{house_name} (ID: {house_id})](building_{house_id}.rst)", file=f)
 
 
 __all__ = ["gen_docs", "build_docs", "LANGUAGES"]

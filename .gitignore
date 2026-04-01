@@ -8,7 +8,7 @@ render
 .directory
 docs/_build/
 docs/img/
-docs/buildings.md
+docs/buildings*.md
 docs/building_*.md
 docs/locale/
 *.mo

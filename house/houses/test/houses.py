@@ -1,7 +1,6 @@
 from house.lib import AHouse
 from agrf.graphics.voxel import LazyVoxel, LazySpriteSheet
 
-
 house_names = [
     "STR_HOUSE_RURAL",
     "STR_HOUSE_RURAL",

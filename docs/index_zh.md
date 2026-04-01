@@ -1,10 +1,10 @@
-```{include} readme_zh.md
+```{include} readme.md
 ```
 
 ```{toctree}
 :maxdepth: 2
 :hidden:
-changelog_zh
+changelog
 buildings
 ```
 
